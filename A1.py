@@ -81,7 +81,7 @@ class SalmonDamModel():
 
     
     def simpVis (self,xObs,yObs) -> None:
-        """input should be two class object (e.g. simpVis(<instance>.outflow, <instance>.count)) with x var first and y var second"""
+        """input should be two class object (e.g. simpVis(<instance>.outflow, <instance>.count)) with x var first and y var second. This will display simple scatter plot of both inputs"""
         
         plt.plot(xObs[1],yObs[1],'o', alpha = .1)
         plt.ylabel(yObs[0] + self.units[yObs[0]])
@@ -90,7 +90,7 @@ class SalmonDamModel():
         plt.show()
 
     def regresVis(self, xObs, yObs, model) -> None:
-        """input should be three instance objects, for input observations, output observations, and regression model (self.simp_model)"""
+        """input should be three instance objects, for input observations, output observations, and regression model (self.simp_model). This will display a plot with x input in y input and overlay modeled regression"""
         
         plt.plot(xObs[1],yObs[1],'o', color='blue' )   # add observation series
         plt.plot(xObs[1], model, '-', color='red' )    # add modeled series
@@ -103,7 +103,7 @@ class SalmonDamModel():
         
     
     def simpRegres(self, xObs, yObs) -> None:
-        """input should be two class object (e.g. simpVis(<instance>.outflow, <instance>.count)) with x var first and y var second"""
+        """input should be two class object (e.g. simpVis(<instance>.outflow, <instance>.count)) with x var first and y var second. This will preform simple linear regression on inputs and update master regression dictionary"""
         
         self.simp_regs_dict["slope"], \
         self.simp_regs_dict["intercept"], \
@@ -115,12 +115,12 @@ class SalmonDamModel():
         self.simp_regs_dict["r2value"] = self.simp_regs_dict["r2value"]**2
 
     def simpModel(self, regres, xObs) -> None:
-        """First argument will be object reference to regression model dict (e.g. <instance>.simp_regs_dic), second argument will be object reference to x observations values for model (e.g. <instance>.turbidity)"""
+        """First argument will be object reference to regression model dict (e.g. <instance>.simp_regs_dic), second argument will be object reference to x observations values for model (e.g. <instance>.turbidity). Makes linear regression model"""
         
         self.simp_model= regres["slope"]*(xObs[1]) + regres["intercept"]
 
     def multi_regs_and_model(self, yObs) -> None:
-        """input should be one class object -- dependent variable (e.g. <instance>.count))"""
+        """input should be one class object -- dependent variable (e.g. <instance>.count)). This makes a multi regression model"""
 
         # perform OLS
         self.xObsArray = sm.add_constant(self.xObsArray)
@@ -130,7 +130,7 @@ class SalmonDamModel():
         self.est_rsquared = self.est.rsquared
 
     def observed_predicted_vis(self, yObs):
-        """input should be one class object -- dependent variable (e.g. <instance>.count))"""
+        """input should be one class object -- dependent variable (e.g. <instance>.count)). Displays a observed vs predicted plot for multi regression"""
 
         yModeled = self.est.predict(self.xObsArray)
 
